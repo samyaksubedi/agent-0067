@@ -6,10 +6,9 @@ export function updateAndDrawEnemies(
   bulletsRef,
   scoreRef,
   onScoreChange,
+  onEnemyHit,
 ) {
-  const now = Date.now();
-
-  // update and draw
+  // update and draw enemies
   enemiesRef.current = enemiesRef.current.filter((enemy) => {
     enemy.y += enemy.speed;
 
@@ -25,13 +24,14 @@ export function updateAndDrawEnemies(
         hit = true;
         scoreRef.current += 10;
         onScoreChange(scoreRef.current);
+        onEnemyHit?.();
         return false;
       }
       return true;
     });
 
     if (hit) {
-      //exploision fxx
+      // draw the explosion
       ctx.fillStyle = '#ffff00';
       ctx.fillRect(enemy.x - 5, enemy.y - 5, 40, 40);
       ctx.fillStyle = '#ff8800';
@@ -39,10 +39,10 @@ export function updateAndDrawEnemies(
       return false;
     }
 
-    //render alien
+    // render the alien
     ctx.fillStyle = '#ff0000';
-    ctx.fillRect(enemy.x + 10, enemy.y, 10, 10); // Head
-    ctx.fillRect(enemy.x + 5, enemy.y + 10, 20, 15); // bidy
+    ctx.fillRect(enemy.x + 10, enemy.y, 10, 10); // head
+    ctx.fillRect(enemy.x + 5, enemy.y + 10, 20, 15); // body
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(enemy.x + 12, enemy.y + 3, 2, 2); // eyes
     ctx.fillRect(enemy.x + 16, enemy.y + 3, 2, 2);

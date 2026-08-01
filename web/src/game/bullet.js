@@ -8,10 +8,10 @@ export function updateAndDrawBullets(ctx, bulletsRef) {
   bulletsRef.current = bulletsRef.current.filter((bullet) => {
     bullet.y -= GAME_CONFIG.BULLET_SPEED;
 
-    // laser beam effect :> 
+    // draw the laser beam
     ctx.fillStyle = '#ffff00';
     ctx.fillRect(bullet.x - 2, bullet.y, 4, 15);
-    // just <3
+    // draw the glow
     ctx.fillStyle = '#ff8800';
     ctx.fillRect(bullet.x - 1, bullet.y, 2, 15);
 

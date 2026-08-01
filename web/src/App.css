@@ -105,3 +105,47 @@
   color: #ff4444;
   margin-top: 10px;
 }
+
+.lobby-input {
+  width: min(320px, 100%);
+  box-sizing: border-box;
+  padding: 12px;
+  margin-top: 10px;
+  font: inherit;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.join-row {
+  width: min(320px, 100%);
+}
+
+.room-code {
+  color: #00ff66;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.lobby-players {
+  width: min(320px, 100%);
+  margin: 18px 0;
+  padding: 10px;
+  border: 1px solid #333;
+  background: #111;
+}
+
+.lobby-players div {
+  padding: 5px;
+}
+
+.leaderboard {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  min-width: 190px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.65);
+  font-size: 13px;
+  text-align: right;
+}

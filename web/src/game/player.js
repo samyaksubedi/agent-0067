@@ -1,5 +1,3 @@
-import { GAME_CONFIG } from '../constants/gameConfig';
-
 export function drawPlayer(ctx, x, canvasHeight) {
   const y = canvasHeight - 80;
 

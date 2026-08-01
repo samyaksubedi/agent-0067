@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { GAME_CONFIG } from '../constants/gameConfig';
 import { drawPlayer } from '../game/player';
 import { updateAndDrawEnemies, spawnEnemyIfNeeded } from '../game/enemy';
@@ -13,9 +13,10 @@ export default function GameCanvas({
   playerXRef,
   bulletsRef,
   triggerShootRef,
+  onEnemyHit,
 }) {
 
-    // declaring basic referances
+  // declaring basic references
   const canvasRef = useRef(null);
   const gameLoopRef = useRef(null);
   const enemiesRef = useRef([]);
@@ -23,17 +24,14 @@ export default function GameCanvas({
   const lastEnemySpawnRef = useRef(0);
   const gameStartTimeRef = useRef(null);
 
-  // gun does phew phew andwe validate it and gits the traget
-  triggerShootRef.current = () => {
-    bulletsRef.current.push(createBullet(playerXRef.current, GAME_CONFIG.CANVAS_HEIGHT));
-    if (!gameLoopRef.current && !gameStarted) {
-      gameStartTimeRef.current = Date.now();
-      setGameStarted(true);
-      setTimeLeft(GAME_CONFIG.GAME_DURATION_SEC);
-    }
-  };
+  useEffect(() => {
+    triggerShootRef.current = () => {
+      if (!gameStarted) return;
+      bulletsRef.current.push(createBullet(playerXRef.current, GAME_CONFIG.CANVAS_HEIGHT));
+    };
+  }, [bulletsRef, gameStarted, playerXRef, triggerShootRef]);
 
-  // a loop to starttt
+  // run the game loop
   useEffect(() => {
     if (!gameStarted) return;
 
@@ -48,7 +46,7 @@ export default function GameCanvas({
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
 
-      // timer updates to show user about their station 
+      // update the timer
       const elapsed = (Date.now() - gameStartTimeRef.current) / 1000;
       const remaining = Math.max(0, GAME_CONFIG.GAME_DURATION_SEC - Math.floor(elapsed));
       setTimeLeft(remaining);
@@ -60,11 +58,11 @@ export default function GameCanvas({
         return;
       }
 
-      // Background clearing
+      // clear the background
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, GAME_CONFIG.CANVAS_WIDTH, GAME_CONFIG.CANVAS_HEIGHT);
 
-      // Starfield
+      // draw the starfield
       ctx.fillStyle = '#ffffff';
       for (let i = 0; i < 50; i++) {
         const x = (i * 37) % GAME_CONFIG.CANVAS_WIDTH;
@@ -72,10 +70,10 @@ export default function GameCanvas({
         ctx.fillRect(x, y, 2, 2);
       }
 
-      // Entity processing
+      // update the game entities
       updateAndDrawBullets(ctx, bulletsRef);
       spawnEnemyIfNeeded(enemiesRef, lastEnemySpawnRef);
-      updateAndDrawEnemies(ctx, enemiesRef, bulletsRef, scoreRef, setScore);
+      updateAndDrawEnemies(ctx, enemiesRef, bulletsRef, scoreRef, setScore, onEnemyHit);
       drawPlayer(ctx, playerXRef.current, GAME_CONFIG.CANVAS_HEIGHT);
 
       gameLoopRef.current = requestAnimationFrame(loop);
@@ -86,9 +84,9 @@ export default function GameCanvas({
     return () => {
       if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
     };
-  }, [gameStarted]);
+  }, [gameStarted, onEnemyHit, setGameOver, setGameStarted, setScore, setTimeLeft, playerXRef, bulletsRef]);
 
-  // return the canvas to the user
+  // return the game canvas
   return (
     <canvas
     ref={canvasRef}

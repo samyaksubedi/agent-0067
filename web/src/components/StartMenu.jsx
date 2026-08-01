@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import GestureTutorial from './GestureTutorial';
 
+=======
+>>>>>>> updated-commits
 export default function StartMenu({ isModelReady, isRunning, errorMsg, onStartCamera, onStartGame }) {
   const [showTutorial, setShowTutorial] = useState(false);
   return (
