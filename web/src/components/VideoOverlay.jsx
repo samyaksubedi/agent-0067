@@ -15,7 +15,7 @@ export default function VideoOverlay({
 
   const headCenterXRef = useRef(null);
   const currentStateRef = useRef('NEUTRAL');
-  const lastShootTimeRef = useRef(null); // NEW: for debouncing
+  const lastShootTimeRef = useRef(null); // debounce shooting
 
   useEffect(() => {
     console.log('🎬 VideoOverlay mounted, starting processFrame loop');
@@ -57,9 +57,7 @@ export default function VideoOverlay({
         if (results.landmarks && results.landmarks.length > 0) {
           const landmarks = results.landmarks[0];
 
-<<<<<<< HEAD
           const { 
-            headTilt, 
             bothHandsActive, 
             shouldShoot,
             gestureConfidence,
@@ -67,9 +65,6 @@ export default function VideoOverlay({
             rightHandActive,
             currentGestureState
           } = parsePoseControls(
-=======
-          const { bothHandsActive, shouldShoot } = parsePoseControls(
->>>>>>> updated-commits
             landmarks,
             { headCenterXRef, playerXRef, currentStateRef, lastShootTimeRef }
           );
