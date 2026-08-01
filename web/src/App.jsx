@@ -8,7 +8,7 @@ import RoomLobby from './components/RoomLobby';
 import GameOverMenu from './components/GameOverMenu';
 import './App.css';
 
-const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
+const serverUrl = import.meta.env.VITE_SERVER_URL || 'https://agent.rusil.me';
 
 export default function App() {
   const { videoRef, landmarkerRef, isModelReady, isRunning, errorMsg, startCamera } = useMediaPipe();
