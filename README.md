@@ -1,15 +1,31 @@
-# Agent 67 multiplayer
+# Agent-0067
 
-The project has a React/Vite game in `web/`, an Express and Socket.IO server in `server/`, and Redis room storage in Docker Compose.
+This is a game which uses our webcam to detect head and hand gestures. The movement is the control element in the game. Moving head shifts the character to either sides and doing 67 viral meme fires bullets. 
 
-## Start locally
+In the game, you find many obstacles which are risky and rewarding. Eliminating them with your bullers earns you 10pts whereas them striking you will make you lose 5pts. You have to dodge them and at the same time, align yourself straight in front of them to shoot. 
 
-1. Start Redis: `docker compose up -d redis`
-2. Start the server: `cd server` then `npm run dev`
-3. Start the game: `cd web` then `npm run dev`
+# Theme
 
-The frontend connects to `http://localhost:3001` by default. Set `VITE_SERVER_URL` in `web/.env` when deploying the server elsewhere. Copy `server/.env.example` to `server/.env` to customize the server port, client origin, Redis address, or Redis password. The default local Redis password is `agent67-local-dev`; change `REDIS_PASSWORD` in both the root `.env` and `server/.env` together when needed.
+If you're wondering how "67" is our theme, Its a partial picture of door with number 0607, we basically removed two zeros. 
+Hence, 67 is derived. 
 
-## Match flow
+Regarding agent, its inspired by james bond movie and the same movie inspired the game idea as well.
 
-Create a room with a validated username, share the six-character code, and have players join before the creator starts the match. The server broadcasts a common start timestamp, tracks each accepted enemy-hit score in Redis, and broadcasts the sorted live leaderboard to everyone in the room. Usernames are case-insensitively unique per room.
+_If you want to take a look at the picture:_
+
+![Screenshot](web/public/theme.jpeg)
+
+# Tech Stack
+
+Backend: nodejs and express
+Frontend: React with vite
+Motion detection: mediapipe mapping library
+Real Time Communication: websockets
+
+
+# What is this game for ?
+
+You can play it singleplayer and set your personal best friend. 
+If you want to challenge someone, select multiplayer and compete with them to find out who gets the highest point. As a cherry on top, there is a live real-time leaderboard so you could track progress easily. 
+
+## Thank You :)
